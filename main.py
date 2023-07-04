@@ -3,10 +3,14 @@ import json
 from sqlalchemy.orm import sessionmaker
 from models import create_tables, Book, Shop, Stock, Sale, Publisher
 from queries import queries
+import os
+from dotenv import load_dotenv
 
-user = ...
-password = ...
-db = ...
+load_dotenv()
+
+user = os.getenv('user')
+password = os.getenv('password')
+db = os.getenv('db')
 
 
 def add_data(session):
@@ -23,8 +27,6 @@ def add_data(session):
         }[record.get('model')]
         session.add(model(id=record.get('pk'), **record.get('fields')))
         session.commit()
-
-    # Для проверяющего: пробовал получить имя класса так: record['model'].capitalize(), не вышло. Такой способ возможен?
 
 
 if __name__ == '__main__':
